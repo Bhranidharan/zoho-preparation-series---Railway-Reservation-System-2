@@ -11,7 +11,7 @@ public class TrainServiceImpl implements TrainService {
 	
 	private static int id = 1;
 	
-	private static int totalTickets = 3;
+	private static int totalTickets = 5;
 	private static int ub = 1;
 	private static int mb = 1;
 	private static int lb = 1;
@@ -36,11 +36,11 @@ public class TrainServiceImpl implements TrainService {
 
 	@Override
 	public String bookTicket(Model model) {
-		if(wt == 0) {
+		if(totalTickets == 0) {
 			return "Sorry All tickets are sold out, Booking Full!!!";
 		}
 		if(model.getPrefferedBirth().equals("u") && ub != 0) {
-			model.setId(id++);
+			//model.setId(id++);
 			totalTickets--;
 			ub--;
 			model.setAllocatedBirth("upperBirth");
@@ -54,7 +54,7 @@ public class TrainServiceImpl implements TrainService {
 			"Allocated Birth : "+model.getAllocatedBirth() + "\n" +
 			"Ticket Status : "+model.getTicketStatus();
 		}else if(model.getPrefferedBirth().equals("m") && mb != 0) {
-			model.setId(id++);
+			//model.setId(id++);
 			totalTickets--;
 			mb--;
 			model.setAllocatedBirth("middleBirth");
@@ -68,7 +68,7 @@ public class TrainServiceImpl implements TrainService {
 			"Allocated Birth : "+model.getAllocatedBirth() + "\n" +
 			"Ticket Status : "+model.getTicketStatus();
 		}else if(model.getPrefferedBirth().equals("l") && lb != 0) {
-			model.setId(id++);
+			//model.setId(id++);
 			totalTickets--;
 			lb--;
 			model.setAllocatedBirth("lowerBirth");
@@ -82,7 +82,7 @@ public class TrainServiceImpl implements TrainService {
 			"Allocated Birth : "+model.getAllocatedBirth() + "\n" +
 			"Ticket Status : "+model.getTicketStatus();
 		}else if(ub != 0) {
-			model.setId(id++);
+			//model.setId(id++);
 			totalTickets--;
 			ub--;
 			model.setAllocatedBirth("upperBirth");
@@ -96,7 +96,7 @@ public class TrainServiceImpl implements TrainService {
 			"Allocated Birth : "+model.getAllocatedBirth() + "\n" +
 			"Ticket Status : "+model.getTicketStatus();
 		}else if(mb != 0) {
-			model.setId(id++);
+			//model.setId(id++);
 			totalTickets--;
 			mb--;
 			model.setAllocatedBirth("middleBirth");
@@ -110,7 +110,7 @@ public class TrainServiceImpl implements TrainService {
 			"Allocated Birth : "+model.getAllocatedBirth() + "\n" +
 			"Ticket Status : "+model.getTicketStatus();
 		}else if(lb != 0) {
-			model.setId(id++);
+			//model.setId(id++);
 			totalTickets--;
 			lb--;
 			model.setAllocatedBirth("lowerBirth");
@@ -124,7 +124,7 @@ public class TrainServiceImpl implements TrainService {
 			"Allocated Birth : "+model.getAllocatedBirth() + "\n" +
 			"Ticket Status : "+model.getTicketStatus();
 		}else if(rac != 0) {
-			model.setId(id++);
+			//model.setId(id++);
 			//totalTickets--;
 			rac--;
 			model.setTicketStatus("Rac");
@@ -134,7 +134,7 @@ public class TrainServiceImpl implements TrainService {
 			"Name : "+ model.getName() +" \n "+
 			"Ticket Status : "+model.getTicketStatus();
 		}else{
-			model.setId(id++);
+			//model.setId(id++);
 		//	totalTickets--;
 			wt--;
 			model.setTicketStatus("WaitingList");
@@ -181,9 +181,21 @@ public class TrainServiceImpl implements TrainService {
 	            default:
 	                return "Something Went Wrong: Cannot find birth";
 	        }
+	        if(racList.size() > 0) {
+	        Model newData = racList.get(0);
+	        racList.remove(0);
+	       String s =  bookTicket(newData);
+	       System.out.println(s);
+	       
+	        }
 	    } else if ("Rac".equals(data.getAllocatedBirth())) {
 	        racList.remove(data);
 	        rac++;
+	        if(wtList.size() > 0) {
+		        Model newData = wtList.get(0);
+		        wtList.remove(0);
+		        bookTicket(newData);
+		        }
 	    } else if ("WaitingList".equals(data.getAllocatedBirth())) {
 	        wtList.remove(data);
 	        wt++;

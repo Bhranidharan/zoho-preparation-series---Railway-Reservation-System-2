@@ -2,6 +2,8 @@ package railway_reservation_system2;
 
 public class Model {
 	
+	private static int setId = 1;
+	
 	private int id;
 	private String name;
 	private int seatNo;
@@ -13,7 +15,7 @@ public class Model {
 	
 	public Model(int id, String name, int seatNo, String allocatedBirth, String prefferedBirth, String ticketStatus) {
 		//super();
-		this.id = id;
+		this.id = setId++;
 		this.name = name;
 		this.seatNo = seatNo;
 		this.allocatedBirth = allocatedBirth;
@@ -21,7 +23,7 @@ public class Model {
 		this.ticketStatus = ticketStatus;
 	}
 	
-	Model(){}
+	Model(){this.id = setId++;}
 
 	public int getId() {
 		return id;
